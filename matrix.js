@@ -11,39 +11,39 @@ const cols = process.stdout.columns || 100;
 console.log("\x1b[40m")
 console.clear()
 
-var setGreen = function (brightness, white=false) {
+let setGreen = function (brightness, white=false) {
     if (white) { 
         console.log("\x1b[37m");
         return;
     }
-    var b = 22 + (brightness*6)
-    var c = `\x1b[38;5;${b}m`;
+    let b = 22 + (brightness*6)
+    let c = `\x1b[38;5;${b}m`;
     // console.log(`\x1b[38;5;${b}m`);
     return c;
 }
 console.log(setGreen(2));
 
-var charOptions = [];
-// for (var c = 12400; c < 12500; c++) { charOptions += String.fromCharCode(c); }
-for (var c = 65; c < 122; c++) { charOptions += String.fromCharCode(c); }
+let charOptions = [];
+// for (let c = 12400; c < 12500; c++) { charOptions += String.fromCharCode(c); }
+for (let c = 65; c < 122; c++) { charOptions += String.fromCharCode(c); }
 function getChar() {
     if (!chars) return 0.5<Math.random()?"0":"1";
-    var char = charOptions[(Math.random()*charOptions.length)>>0];
+    let char = charOptions[(Math.random()*charOptions.length)>>0];
     return char;
-    // var id = 32 + Math.random() * 300;
+    // let id = 32 + Math.random() * 300;
     // if (id > 126) id += 32 //The 32 chars after 127 don't show up
-    // var char = String.fromCharCode(id >> 0);
+    // let char = String.fromCharCode(id >> 0);
     // return char;
 }
 
 //Create matrix
-var matrix = new Array(rows);
-for (var i = 0; i < matrix.length; i++) {
+let matrix = new Array(rows);
+for (let i = 0; i < matrix.length; i++) {
     matrix[i] = (new Array(cols)).fill(" ");
 }
 
-var display = function() {
-    var matrixStr = "";
+let display = function() {
+    let matrixStr = "";
     highlight(matrix).forEach(col => {
         matrixStr += col.join("");
     });
@@ -51,7 +51,7 @@ var display = function() {
     console.log(matrixStr)
 }
 
-var print = function(text, dim=0, white=false) {
+let print = function(text, dim=0, white=false) {
     if (!white) console.log("\x1b[32m");
     else console.log("\x1b[37m");
     for (dim; dim--;) {
@@ -60,11 +60,11 @@ var print = function(text, dim=0, white=false) {
     console.log(text)
 }
 
-var extend = function() {
-    var downPoints = []
-    var removePoints = []
-    for (var row = 0; row < rows-2; row++) {
-        for (var col = 0; col < cols; col++) {
+let extend = function() {
+    let downPoints = []
+    let removePoints = []
+    for (let row = 0; row < rows-2; row++) {
+        for (let col = 0; col < cols; col++) {
             if (matrix[row][col] !== " " && matrix[row+1][col] === " ") {
                 downPoints.push({ row:row+1, col:col });
             }
@@ -81,26 +81,26 @@ var extend = function() {
     })
 }
 
-var highlight = function() {
-    var highlightedMatrix = JSON.parse(JSON.stringify(matrix));
-    var downPoints = []
-    for (var row = 0; row < rows-2; row++) {
-        for (var col = 0; col < cols; col++) {
+let highlight = function() {
+    let highlightedMatrix = JSON.parse(JSON.stringify(matrix));
+    let downPoints = []
+    for (let row = 0; row < rows-2; row++) {
+        for (let col = 0; col < cols; col++) {
             if (highlightedMatrix[row][col] !== " " && highlightedMatrix[row+1][col] === " ") {
                 downPoints.push({ row:row, col:col });
             }
         }
     }
     downPoints.forEach(p => {
-        var char = highlightedMatrix[p.row][p.col];
+        let char = highlightedMatrix[p.row][p.col];
         highlightedMatrix[p.row][p.col] = "\x1b[37m" + char + setGreen(2);
     })
     return highlightedMatrix;
 }
 
-var updateStart = function() {
-    var row = matrix[0];
-    for (var col = 0; col < cols; col++) {
+let updateStart = function() {
+    let row = matrix[0];
+    for (let col = 0; col < cols; col++) {
         if (row[col] === " ") {
             if (generatingChance > Math.random()) row[col] = getChar();
         } 
