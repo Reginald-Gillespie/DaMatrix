@@ -11,7 +11,7 @@ const cols = process.stdout.columns || 100;
 console.log("\x1b[40m")
 console.clear()
 
-let setGreen = function (brightness, white=false) {
+const setGreen = (brightness, white=false) => {
     if (white) { 
         console.log("\x1b[37m");
         return;
@@ -51,7 +51,7 @@ let display = function() {
     console.log(matrixStr)
 }
 
-let print = function(text, dim=0, white=false) {
+let print = (text, dim=0, white=false) => {
     if (!white) console.log("\x1b[32m");
     else console.log("\x1b[37m");
     for (dim; dim--;) {
@@ -81,7 +81,7 @@ let extend = function() {
     })
 }
 
-let highlight = function() {
+const highlight => {
     let highlightedMatrix = JSON.parse(JSON.stringify(matrix));
     let downPoints = []
     for (let row = 0; row < rows-2; row++) {
