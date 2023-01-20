@@ -81,7 +81,7 @@ let extend = function() {
     })
 }
 
-const highlight => {
+const highlight = () => {
     let highlightedMatrix = JSON.parse(JSON.stringify(matrix));
     let downPoints = []
     for (let row = 0; row < rows-2; row++) {
