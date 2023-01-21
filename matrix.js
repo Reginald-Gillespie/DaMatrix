@@ -1,7 +1,7 @@
 const generatingChance = 6 / 100;
 const cuttingChance = 7 / 100;
-const frameDelay = 30;
-const chars = true;
+const frameDelay = 40;
+const chars = false;
 
 
 const rows = process.stdout.rows-1 || 20;
@@ -27,9 +27,9 @@ let charOptions = [];
 // for (let c = 12400; c < 12500; c++) { charOptions += String.fromCharCode(c); }
 for (let c = 65; c < 122; c++) { charOptions += String.fromCharCode(c); }
 function getChar() {
-    if (!chars) return 0.5<Math.random()?"0":"1";
+    if (!chars) return setGreen((Math.random()*4)>>0) + (0.5<Math.random()?"0":"1");
     let char = charOptions[(Math.random()*charOptions.length)>>0];
-    return char;
+    return setGreen((Math.random()*4)>>0) + char;
     // let id = 32 + Math.random() * 300;
     // if (id > 126) id += 32 //The 32 chars after 127 don't show up
     // let char = String.fromCharCode(id >> 0);
@@ -93,7 +93,7 @@ const highlight = () => {
     }
     downPoints.forEach(p => {
         let char = highlightedMatrix[p.row][p.col];
-        highlightedMatrix[p.row][p.col] = "\x1b[37m" + char + setGreen(2);
+        highlightedMatrix[p.row][p.col] = "\x1b[37m" + char.slice(-1) + setGreen(2);
     })
     return highlightedMatrix;
 }
@@ -110,4 +110,4 @@ let updateStart = function() {
     }
 }
 
-setInterval(_=>{ updateStart(); extend(); display(); }, frameDelay)
+setInterval(_=>{ extend(); updateStart(); display(); }, frameDelay)
